@@ -258,6 +258,30 @@
 }
 
 /* =========================================
+   Accessibility: Reduced Motion
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+    @layer components {
+        .record-player__label {
+            animation: none !important;
+        }
+
+        .record-player__glare {
+            filter: none;
+        }
+
+        .record-player__glare::before,
+        .record-player__glare::after {
+            animation: none !important;
+        }
+
+        .record-player__arm {
+            animation: none !important;
+        }
+    }
+}
+
+/* =========================================
    Animations
    ========================================= */
 @keyframes spin {

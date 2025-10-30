@@ -3,8 +3,7 @@
   - [x] refactor(css): use a more descriptive block name, .record-player instead of .player
   - [x] refactor(css): organize with CSS layers and section comments.
 - [x] refactor(css): extract repeated colors and sizes into CSS variables
-- [ ] refactor(css): use clamp() for scalable sizing
-- [ ] feat(a11y): add prefers-reduced-motion support
+- [x] feat(a11y): add prefers-reduced-motion support
 - [ ] feat(controls): pause animations by default and toggle with a state class
 - [ ] perf(animation): replace blur filter with a soft radial/gradient overlay
 - [ ] feat(a11y): wrap the visual block in a semantic container
@@ -13,7 +12,9 @@
   - [ ] perf(css): mark glare as non-interactive
 - [ ] fix(layout): center the record player itself with top/left 50% and transform
 - [ ] fix(animation): record spins via the record surface, not the label
+- [ ] fix(arm): join the tonearm bar and lower
 - [ ] fix(arm): tonearm pivot transform-origin correction
+- [ ] refactor(css): use clamp() for scalable sizing
 - [ ] chore(css): remove commented debug styles
 - [ ] refactor(label): replace hardcoded label text in CSS with content from HTML data
 - [ ] feat(label): update the center-label artwork to a new design
