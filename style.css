@@ -16,13 +16,13 @@ body {
     overflow: clip;
 }
 
-#record-player {
+.player {
     position: relative;
     width: 0;
     height: 0;
 }
 
-#record-container {
+.player__container {
     background-color: whitesmoke;
     width: 250px;
     aspect-ratio: 1;
@@ -35,7 +35,7 @@ body {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-#record {
+.player__record {
     width: 98%;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -44,33 +44,31 @@ body {
     display: grid;
     justify-items: center;
     align-items: center;
-    background-image: radial-gradient(
-        circle at center,
-        transparent 32.75%,
-        rgba(255, 255, 255, 0.05) 33%,
-        rgba(255, 255, 255, 0.05) 38%,
-        transparent 38.25%,
-        transparent 38.75%,
-        rgba(255, 255, 255, 0.05) 39%,
-        rgba(255, 255, 255, 0.05) 48%,
-        transparent 48.25%,
-        transparent 48.75%,
-        rgba(255, 255, 255, 0.05) 49%,
-        rgba(255, 255, 255, 0.05) 57%,
-        transparent 57.25%,
-        transparent 57.75%,
-        rgba(255, 255, 255, 0.05) 58%,
-        rgba(255, 255, 255, 0.05) 62%,
-        transparent 62.25%,
-        transparent 62.75%,
-        rgba(255, 255, 255, 0.05) 63%,
-        rgba(255, 255, 255, 0.05) 69%,
-        transparent 69.25%
-    );
+    background-image: radial-gradient(circle at center,
+            transparent 32.75%,
+            rgba(255, 255, 255, 0.05) 33%,
+            rgba(255, 255, 255, 0.05) 38%,
+            transparent 38.25%,
+            transparent 38.75%,
+            rgba(255, 255, 255, 0.05) 39%,
+            rgba(255, 255, 255, 0.05) 48%,
+            transparent 48.25%,
+            transparent 48.75%,
+            rgba(255, 255, 255, 0.05) 49%,
+            rgba(255, 255, 255, 0.05) 57%,
+            transparent 57.25%,
+            transparent 57.75%,
+            rgba(255, 255, 255, 0.05) 58%,
+            rgba(255, 255, 255, 0.05) 62%,
+            transparent 62.25%,
+            transparent 62.75%,
+            rgba(255, 255, 255, 0.05) 63%,
+            rgba(255, 255, 255, 0.05) 69%,
+            transparent 69.25%);
     overflow: clip;
 }
 
-#record::before {
+.player__record::before {
     content: "";
     position: absolute;
     background-color: #bbb;
@@ -84,7 +82,7 @@ body {
     z-index: 1;
 }
 
-#record-center {
+.player__label {
     background: rgb(231, 226, 199);
     width: 85px;
     aspect-ratio: 1;
@@ -98,7 +96,7 @@ body {
     animation: spin 1s infinite linear 2s;
 }
 
-#record-center::after {
+.player__label::after {
     content: "CHEN.XING";
     color: black;
     font-family: "Roboto", sans-serif;
@@ -115,18 +113,19 @@ body {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
 }
 
-.glare {
+.player__glare {
     height: 100%;
     width: 100%;
     filter: blur(2vh);
 }
 
-.glare::before {
+.player__glare::before {
     content: "";
     height: 100%;
     width: 100%;
@@ -136,7 +135,7 @@ body {
     animation: teeter 1.3333333333s linear infinite;
 }
 
-.glare::after {
+.player__glare::after {
     content: "";
     height: 100%;
     width: 100%;
@@ -150,9 +149,11 @@ body {
     0% {
         transform: rotate(0deg);
     }
+
     35% {
         transform: rotate(2.5deg);
     }
+
     100% {
         transform: rotate(0deg);
     }
@@ -162,15 +163,17 @@ body {
     0% {
         transform: rotate(0deg);
     }
+
     35% {
         transform: rotate(-2.5deg);
     }
+
     100% {
         transform: rotate(0deg);
     }
 }
 
-#arm-base {
+.player__arm {
     width: 50px;
     height: 50px;
     background: gray;
@@ -188,6 +191,7 @@ body {
     from {
         transform: rotate(-82deg);
     }
+
     to {
         transform: rotate(-75deg);
     }
@@ -197,15 +201,17 @@ body {
     0% {
         transform: rotate(-75deg);
     }
+
     97% {
         transform: rotate(-60deg);
     }
+
     100% {
         transform: rotate(-75deg);
     }
 }
 
-#arm-base::before {
+.player__arm::before {
     content: "";
     width: 42px;
     height: 42px;
@@ -216,14 +222,14 @@ body {
     left: 4px;
 }
 
-#arm-bar {
+.player__arm-bar {
     height: 160px;
     width: 8px;
     background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
-#arm-bar::before {
+.player__arm-bar::before {
     content: "";
     position: absolute;
     width: 15px;
@@ -235,7 +241,7 @@ body {
     background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
 }
 
-#arm-bar-bottom {
+.player__arm-bar--lower {
     height: 75px;
     width: 8px;
     position: absolute;
@@ -245,7 +251,7 @@ body {
     background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
 }
 
-#arm-bar-bottom::after {
+.player__arm-bar--lower::after {
     content: "";
     display: block;
     width: 15.6px;
