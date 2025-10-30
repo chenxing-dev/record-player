@@ -165,8 +165,13 @@
         height: 100%;
         width: 100%;
         filter: blur(2vh);
+        /* softens the glare edges */
+        pointer-events: none;
+        /* non-interactive decorative layer */
+        user-select: none;
     }
 
+    /* Glare shapes simulate reflection */
     .record-player__glare::before {
         content: "";
         height: 100%;
@@ -174,6 +179,8 @@
         position: absolute;
         background-color: var(--glare-strong);
         clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 100%);
+        /* a soft diagonal glare */
+        /* animation applied when .is-playing is present */
     }
 
     .record-player__glare::after {
@@ -183,6 +190,8 @@
         position: absolute;
         background-color: var(--glare-weak);
         clip-path: polygon(0 0, 50% 0, 50% 100%, 100% 100%);
+        /* a softer diagonal glare */
+        /* animation applied when .is-playing is present */
     }
 
     /* Tonearm */
@@ -308,8 +317,7 @@
     }
 }
 
-/* components consolidated above */
-
+/* a small positive rotation to simulate teetering */
 @keyframes teeter {
     0% {
         transform: rotate(0deg);
@@ -324,6 +332,7 @@
     }
 }
 
+/* a small negative rotation to simulate teetering */
 @keyframes teeter-flip {
     0% {
         transform: rotate(0deg);
@@ -337,8 +346,6 @@
         transform: rotate(0deg);
     }
 }
-
-/* components consolidated above */
 
 @keyframes move-init {
     from {
@@ -363,5 +370,3 @@
         transform: rotate(-75deg);
     }
 }
-
-/* components consolidated above */

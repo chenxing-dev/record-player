@@ -5,11 +5,10 @@
 - [x] refactor(css): extract repeated colors and sizes into CSS variables
 - [x] style(a11y): add prefers-reduced-motion support
 - [x] refactor(controls): pause animations by default and toggle with a state class
-- [ ] perf(animation): replace blur filter with a soft radial/gradient overlay
-- [ ] feat(a11y): wrap the visual block in a semantic container
-  - [ ] feat(a11y): <main> with ARIA role img and label
-  - [ ] feat(a11y): decorative elements hidden from screen readers
-  - [ ] perf(css): mark glare as non-interactive
+- [x] feat(a11y): wrap the visual block in a semantic container
+  - [x] feat(a11y): <main> with ARIA role img and label
+  - [x] feat(a11y): decorative elements hidden from screen readers
+  - [x] perf(css): mark glare as non-interactive
 - [ ] fix(layout): center the record player itself with top/left 50% and transform
 - [ ] fix(animation): record spins via the record surface, not the label
 - [ ] fix(arm): join the tonearm bar and lower
@@ -25,7 +24,7 @@
   - [ ] feat(animation): add needle drop effect on play start
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
   - [ ] feat(record): add vinyl groove texture
-  - [ ] feat(record): add surface reflection
+  
   - [ ] feat(spindle): add metallic texture
 - [ ] feat(chassis): add wooden base for the player
 - [ ] feat(shadow): add shadow under the record player
