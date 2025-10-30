@@ -2,9 +2,9 @@
   - [x] refactor(css): convert IDs to BEM classes
   - [x] refactor(css): use a more descriptive block name, .record-player instead of .player
   - [x] refactor(css): organize with CSS layers and section comments.
-- [ ] refactor(css): extract repeated colors and sizes into CSS variables
+- [x] refactor(css): extract repeated colors and sizes into CSS variables
 - [ ] refactor(css): use clamp() for scalable sizing
-- [ ] feat(a11y): respect reduced motion preference
+- [ ] feat(a11y): add prefers-reduced-motion support
 - [ ] feat(controls): pause animations by default and toggle with a state class
 - [ ] perf(animation): replace blur filter with a soft radial/gradient overlay
 - [ ] feat(a11y): wrap the visual block in a semantic container

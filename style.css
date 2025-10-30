@@ -21,9 +21,42 @@
    Base
    ========================================= */
 @layer base {
+    :root {
+        /* Colors */
+        --color-bg: #bbb;
+        --color-white: whitesmoke;
+        --color-black: #000;
+        --border-dark: #333;
+        --label-bg: rgb(231, 226, 199);
+        --shadow-ring: rgba(225, 225, 225, 0.2);
+        --glare-strong: rgba(255, 255, 255, 0.1);
+        --glare-weak: rgba(255, 255, 255, 0.05);
+        --metal-1: #bbb;
+        --metal-2: #ccc;
+        --metal-3: #999;
+
+        /* Sizes */
+        --platter-size: 250px;
+        --label-size: 85px;
+        --spindle-size: 6px;
+        --arm-base-size: 50px;
+        --arm-bar-width: 8px;
+        --arm-bar-length: 160px;
+        --arm-lower-length: 75px;
+
+        /* Animation timings */
+        --spin-duration: 1s;
+        --teeter-duration: 1.3333333333s;
+        --move-duration: 50s;
+        --move-init-duration: 1s;
+        --spin-delay: 2s;
+        --move-init-delay: 1s;
+        --move-delay: 2s;
+    }
+
     body {
         height: 100svh;
-        background: #bbb;
+        background: var(--color-bg);
         display: grid;
         justify-content: center;
         align-items: center;
@@ -42,8 +75,8 @@
     }
 
     .record-player__platter {
-        background-color: whitesmoke;
-        width: 250px;
+        background-color: var(--color-white);
+        width: var(--platter-size);
         aspect-ratio: 1;
         border-radius: 50%;
         position: absolute;
@@ -58,7 +91,7 @@
         width: 98%;
         aspect-ratio: 1;
         border-radius: 50%;
-        background: black;
+        background: var(--color-black);
         position: absolute;
         display: grid;
         justify-items: center;
@@ -90,9 +123,9 @@
     .record-player__record::before {
         content: "";
         position: absolute;
-        background-color: #bbb;
+        background-color: var(--color-bg);
         box-shadow: 0 0 5px black;
-        width: 6px;
+        width: var(--spindle-size);
         aspect-ratio: 1;
         top: 50%;
         left: 50%;
@@ -102,17 +135,17 @@
     }
 
     .record-player__label {
-        background: rgb(231, 226, 199);
-        width: 85px;
+        background: var(--label-bg);
+        width: var(--label-size);
         aspect-ratio: 1;
         border-radius: 50%;
         position: absolute;
-        box-shadow: 0px 0px 0px 15px rgba(225, 225, 225, 0.2), 0 0px 0px 17px black, 0px 0px 0px 19px rgba(225, 225, 225, 0.2), 0px 0px 0px 21px black;
-        border: 4px solid #333;
+        box-shadow: 0 0 0 15px var(--shadow-ring), 0 0 0 17px var(--color-black), 0 0 0 19px var(--shadow-ring), 0 0 0 21px var(--color-black);
+        border: 4px solid var(--border-dark);
         display: grid;
         align-items: center;
         justify-content: center;
-        animation: spin 1s infinite linear 2s;
+        animation: spin var(--spin-duration) infinite linear var(--spin-delay);
     }
 
     .record-player__label::after {
@@ -140,9 +173,9 @@
         height: 100%;
         width: 100%;
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: var(--glare-strong);
         clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 100%);
-        animation: teeter 1.3333333333s linear infinite;
+        animation: teeter var(--teeter-duration) linear infinite;
     }
 
     .record-player__glare::after {
@@ -150,22 +183,22 @@
         height: 100%;
         width: 100%;
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--glare-weak);
         clip-path: polygon(0 0, 50% 0, 50% 100%, 100% 100%);
-        animation: teeter-flip 1.3333333333s linear infinite;
+        animation: teeter-flip var(--teeter-duration) linear infinite;
     }
 
     /* Tonearm */
     .record-player__arm {
-        width: 50px;
-        height: 50px;
+        width: var(--arm-base-size);
+        height: var(--arm-base-size);
         background: gray;
         border-radius: 50%;
         position: absolute;
         left: -120px;
         top: -185px;
         transform: rotate(-82deg);
-        animation: move-init 1s 1 forwards 1s, move 50s infinite linear 2s;
+        animation: move-init var(--move-init-duration) 1 forwards var(--move-init-delay), move var(--move-duration) infinite linear var(--move-delay);
         display: grid;
         justify-content: center;
     }
@@ -182,9 +215,9 @@
     }
 
     .record-player__arm-bar {
-        height: 160px;
-        width: 8px;
-        background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
+        height: var(--arm-bar-length);
+        width: var(--arm-bar-width);
+        background-image: linear-gradient(to right, var(--metal-1), var(--metal-2) 40%, var(--metal-3));
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
     }
 
@@ -201,13 +234,13 @@
     }
 
     .record-player__arm-bar--lower {
-        height: 75px;
-        width: 8px;
+        height: var(--arm-lower-length);
+        width: var(--arm-bar-width);
         position: absolute;
         bottom: -180px;
         left: 5.8px;
         transform: rotate(25deg);
-        background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
+        background-image: linear-gradient(to right, var(--metal-1), var(--metal-2) 40%, var(--metal-3));
     }
 
     .record-player__arm-bar--lower::after {
