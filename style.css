@@ -145,7 +145,6 @@
         display: grid;
         align-items: center;
         justify-content: center;
-        animation: spin var(--spin-duration) infinite linear var(--spin-delay);
     }
 
     .record-player__label::after {
@@ -175,7 +174,6 @@
         position: absolute;
         background-color: var(--glare-strong);
         clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 100%);
-        animation: teeter var(--teeter-duration) linear infinite;
     }
 
     .record-player__glare::after {
@@ -185,7 +183,6 @@
         position: absolute;
         background-color: var(--glare-weak);
         clip-path: polygon(0 0, 50% 0, 50% 100%, 100% 100%);
-        animation: teeter-flip var(--teeter-duration) linear infinite;
     }
 
     /* Tonearm */
@@ -198,9 +195,9 @@
         left: -120px;
         top: -185px;
         transform: rotate(-82deg);
-        animation: move-init var(--move-init-duration) 1 forwards var(--move-init-delay), move var(--move-duration) infinite linear var(--move-delay);
         display: grid;
         justify-content: center;
+        /* animation applied when .is-playing is present */
     }
 
     .record-player__arm::before {
@@ -254,6 +251,23 @@
         border-radius: 2px;
         clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 100% 100%, 0 100%);
         background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
+    }
+
+    /* State: playing */
+    .record-player.is-playing .record-player__label {
+        animation: spin var(--spin-duration) infinite linear var(--spin-delay);
+    }
+
+    .record-player.is-playing .record-player__glare::before {
+        animation: teeter var(--teeter-duration) linear infinite;
+    }
+
+    .record-player.is-playing .record-player__glare::after {
+        animation: teeter-flip var(--teeter-duration) linear infinite;
+    }
+
+    .record-player.is-playing .record-player__arm {
+        animation: move-init var(--move-init-duration) 1 forwards var(--move-init-delay), move var(--move-duration) infinite linear var(--move-delay);
     }
 }
 

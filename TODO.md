@@ -3,8 +3,8 @@
   - [x] refactor(css): use a more descriptive block name, .record-player instead of .player
   - [x] refactor(css): organize with CSS layers and section comments.
 - [x] refactor(css): extract repeated colors and sizes into CSS variables
-- [x] feat(a11y): add prefers-reduced-motion support
-- [ ] feat(controls): pause animations by default and toggle with a state class
+- [x] style(a11y): add prefers-reduced-motion support
+- [x] refactor(controls): pause animations by default and toggle with a state class
 - [ ] perf(animation): replace blur filter with a soft radial/gradient overlay
 - [ ] feat(a11y): wrap the visual block in a semantic container
   - [ ] feat(a11y): <main> with ARIA role img and label
@@ -21,6 +21,7 @@
 - [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] feat(controls): add play/pause functionality
   - [ ] feat(controls): add a play/pause toggle button
+  - [ ] feat(controls): wire the class toggle in CSS-only
   - [ ] feat(animation): add needle drop effect on play start
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
   - [ ] feat(record): add vinyl groove texture
