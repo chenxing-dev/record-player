@@ -1,114 +1,232 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap");
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    /* border: 2px solid red; */
+/* =========================================
+   Cascade Layers Order
+   ========================================= */
+@layer reset, base, components;
+
+/* =========================================
+   Reset
+   ========================================= */
+@layer reset {
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        /* border: 2px solid red; */
+    }
 }
 
-body {
-    height: 100svh;
-    background: #bbb;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    overflow: clip;
+/* =========================================
+   Base
+   ========================================= */
+@layer base {
+    body {
+        height: 100svh;
+        background: #bbb;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        overflow: clip;
+    }
 }
 
-.record-player {
-    position: relative;
-    width: 0;
-    height: 0;
+/* =========================================
+   Components: Record Player (block)
+   ========================================= */
+@layer components {
+    .record-player {
+        position: relative;
+        width: 0;
+        height: 0;
+    }
+
+    .record-player__platter {
+        background-color: whitesmoke;
+        width: 250px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+
+    .record-player__record {
+        width: 98%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: black;
+        position: absolute;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        background-image: radial-gradient(circle at center,
+                transparent 32.75%,
+                rgba(255, 255, 255, 0.05) 33%,
+                rgba(255, 255, 255, 0.05) 38%,
+                transparent 38.25%,
+                transparent 38.75%,
+                rgba(255, 255, 255, 0.05) 39%,
+                rgba(255, 255, 255, 0.05) 48%,
+                transparent 48.25%,
+                transparent 48.75%,
+                rgba(255, 255, 255, 0.05) 49%,
+                rgba(255, 255, 255, 0.05) 57%,
+                transparent 57.25%,
+                transparent 57.75%,
+                rgba(255, 255, 255, 0.05) 58%,
+                rgba(255, 255, 255, 0.05) 62%,
+                transparent 62.25%,
+                transparent 62.75%,
+                rgba(255, 255, 255, 0.05) 63%,
+                rgba(255, 255, 255, 0.05) 69%,
+                transparent 69.25%);
+        overflow: clip;
+    }
+
+    .record-player__record::before {
+        content: "";
+        position: absolute;
+        background-color: #bbb;
+        box-shadow: 0 0 5px black;
+        width: 6px;
+        aspect-ratio: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .record-player__label {
+        background: rgb(231, 226, 199);
+        width: 85px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        position: absolute;
+        box-shadow: 0px 0px 0px 15px rgba(225, 225, 225, 0.2), 0 0px 0px 17px black, 0px 0px 0px 19px rgba(225, 225, 225, 0.2), 0px 0px 0px 21px black;
+        border: 4px solid #333;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        animation: spin 1s infinite linear 2s;
+    }
+
+    .record-player__label::after {
+        content: "CHEN.XING";
+        color: black;
+        font-family: "Roboto", sans-serif;
+        font-weight: 300;
+        font-style: italic;
+        font-size: 0.7rem;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    /* Glare overlay */
+    .record-player__glare {
+        height: 100%;
+        width: 100%;
+        filter: blur(2vh);
+    }
+
+    .record-player__glare::before {
+        content: "";
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.1);
+        clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 100%);
+        animation: teeter 1.3333333333s linear infinite;
+    }
+
+    .record-player__glare::after {
+        content: "";
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.05);
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 100% 100%);
+        animation: teeter-flip 1.3333333333s linear infinite;
+    }
+
+    /* Tonearm */
+    .record-player__arm {
+        width: 50px;
+        height: 50px;
+        background: gray;
+        border-radius: 50%;
+        position: absolute;
+        left: -120px;
+        top: -185px;
+        transform: rotate(-82deg);
+        animation: move-init 1s 1 forwards 1s, move 50s infinite linear 2s;
+        display: grid;
+        justify-content: center;
+    }
+
+    .record-player__arm::before {
+        content: "";
+        width: 42px;
+        height: 42px;
+        background: rgb(197, 196, 196);
+        border-radius: 50%;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+    }
+
+    .record-player__arm-bar {
+        height: 160px;
+        width: 8px;
+        background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
+        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+    }
+
+    .record-player__arm-bar::before {
+        content: "";
+        position: absolute;
+        width: 15px;
+        height: 30px;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 100% 0, 0 0);
+        background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
+    }
+
+    .record-player__arm-bar--lower {
+        height: 75px;
+        width: 8px;
+        position: absolute;
+        bottom: -180px;
+        left: 5.8px;
+        transform: rotate(25deg);
+        background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
+    }
+
+    .record-player__arm-bar--lower::after {
+        content: "";
+        display: block;
+        width: 15.6px;
+        height: 25px;
+        position: absolute;
+        bottom: -25px;
+        left: -3.5px;
+        border-radius: 2px;
+        clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 100% 100%, 0 100%);
+        background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
+    }
 }
 
-.record-player__container {
-    background-color: whitesmoke;
-    width: 250px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
-}
-
-.record-player__record {
-    width: 98%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: black;
-    position: absolute;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-image: radial-gradient(circle at center,
-            transparent 32.75%,
-            rgba(255, 255, 255, 0.05) 33%,
-            rgba(255, 255, 255, 0.05) 38%,
-            transparent 38.25%,
-            transparent 38.75%,
-            rgba(255, 255, 255, 0.05) 39%,
-            rgba(255, 255, 255, 0.05) 48%,
-            transparent 48.25%,
-            transparent 48.75%,
-            rgba(255, 255, 255, 0.05) 49%,
-            rgba(255, 255, 255, 0.05) 57%,
-            transparent 57.25%,
-            transparent 57.75%,
-            rgba(255, 255, 255, 0.05) 58%,
-            rgba(255, 255, 255, 0.05) 62%,
-            transparent 62.25%,
-            transparent 62.75%,
-            rgba(255, 255, 255, 0.05) 63%,
-            rgba(255, 255, 255, 0.05) 69%,
-            transparent 69.25%);
-    overflow: clip;
-}
-
-.record-player__record::before {
-    content: "";
-    position: absolute;
-    background-color: #bbb;
-    box-shadow: 0 0 5px black;
-    width: 6px;
-    aspect-ratio: 1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.record-player__label {
-    background: rgb(231, 226, 199);
-    width: 85px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    position: absolute;
-    box-shadow: 0px 0px 0px 15px rgba(225, 225, 225, 0.2), 0 0px 0px 17px black, 0px 0px 0px 19px rgba(225, 225, 225, 0.2), 0px 0px 0px 21px black;
-    border: 4px solid #333;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    animation: spin 1s infinite linear 2s;
-}
-
-.record-player__label::after {
-    content: "CHEN.XING";
-    color: black;
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 0.7rem;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    padding-top: 20px;
-}
-
+/* =========================================
+   Animations
+   ========================================= */
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -119,31 +237,7 @@ body {
     }
 }
 
-.record-player__glare {
-    height: 100%;
-    width: 100%;
-    filter: blur(2vh);
-}
-
-.record-player__glare::before {
-    content: "";
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.1);
-    clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 100%);
-    animation: teeter 1.3333333333s linear infinite;
-}
-
-.record-player__glare::after {
-    content: "";
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.05);
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 100% 100%);
-    animation: teeter-flip 1.3333333333s linear infinite;
-}
+/* components consolidated above */
 
 @keyframes teeter {
     0% {
@@ -173,19 +267,7 @@ body {
     }
 }
 
-.record-player__arm {
-    width: 50px;
-    height: 50px;
-    background: gray;
-    border-radius: 50%;
-    position: absolute;
-    left: -120px;
-    top: -185px;
-    transform: rotate(-82deg);
-    animation: move-init 1s 1 forwards 1s, move 50s infinite linear 2s;
-    display: grid;
-    justify-content: center;
-}
+/* components consolidated above */
 
 @keyframes move-init {
     from {
@@ -211,55 +293,4 @@ body {
     }
 }
 
-.record-player__arm::before {
-    content: "";
-    width: 42px;
-    height: 42px;
-    background: rgb(197, 196, 196);
-    border-radius: 50%;
-    position: absolute;
-    top: 4px;
-    left: 4px;
-}
-
-.record-player__arm-bar {
-    height: 160px;
-    width: 8px;
-    background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-}
-
-.record-player__arm-bar::before {
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 30px;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 100% 0, 0 0);
-    background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
-}
-
-.record-player__arm-bar--lower {
-    height: 75px;
-    width: 8px;
-    position: absolute;
-    bottom: -180px;
-    left: 5.8px;
-    transform: rotate(25deg);
-    background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
-}
-
-.record-player__arm-bar--lower::after {
-    content: "";
-    display: block;
-    width: 15.6px;
-    height: 25px;
-    position: absolute;
-    bottom: -25px;
-    left: -3.5px;
-    border-radius: 2px;
-    clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 100% 100%, 0 100%);
-    background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
-}
+/* components consolidated above */

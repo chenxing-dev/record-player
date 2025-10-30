@@ -1,7 +1,7 @@
-- [ ] refactor(css): naming and specificity improvements
+- [x] refactor(css): naming and specificity improvements
   - [x] refactor(css): convert IDs to BEM classes
-  - [x] fix(css): use a more descriptive block name, .record-player instead of .player
-  - [ ] refactor(css): organize with CSS layers and section comments.
+  - [x] refactor(css): use a more descriptive block name, .record-player instead of .player
+  - [x] refactor(css): organize with CSS layers and section comments.
 - [ ] refactor(css): extract repeated colors and sizes into CSS variables
 - [ ] refactor(css): use clamp() for scalable sizing
 - [ ] feat(a11y): respect reduced motion preference
