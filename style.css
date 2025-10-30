@@ -16,13 +16,13 @@ body {
     overflow: clip;
 }
 
-.player {
+.record-player {
     position: relative;
     width: 0;
     height: 0;
 }
 
-.player__container {
+.record-player__container {
     background-color: whitesmoke;
     width: 250px;
     aspect-ratio: 1;
@@ -35,7 +35,7 @@ body {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
-.player__record {
+.record-player__record {
     width: 98%;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -68,7 +68,7 @@ body {
     overflow: clip;
 }
 
-.player__record::before {
+.record-player__record::before {
     content: "";
     position: absolute;
     background-color: #bbb;
@@ -82,7 +82,7 @@ body {
     z-index: 1;
 }
 
-.player__label {
+.record-player__label {
     background: rgb(231, 226, 199);
     width: 85px;
     aspect-ratio: 1;
@@ -96,7 +96,7 @@ body {
     animation: spin 1s infinite linear 2s;
 }
 
-.player__label::after {
+.record-player__label::after {
     content: "CHEN.XING";
     color: black;
     font-family: "Roboto", sans-serif;
@@ -119,13 +119,13 @@ body {
     }
 }
 
-.player__glare {
+.record-player__glare {
     height: 100%;
     width: 100%;
     filter: blur(2vh);
 }
 
-.player__glare::before {
+.record-player__glare::before {
     content: "";
     height: 100%;
     width: 100%;
@@ -135,7 +135,7 @@ body {
     animation: teeter 1.3333333333s linear infinite;
 }
 
-.player__glare::after {
+.record-player__glare::after {
     content: "";
     height: 100%;
     width: 100%;
@@ -173,7 +173,7 @@ body {
     }
 }
 
-.player__arm {
+.record-player__arm {
     width: 50px;
     height: 50px;
     background: gray;
@@ -211,7 +211,7 @@ body {
     }
 }
 
-.player__arm::before {
+.record-player__arm::before {
     content: "";
     width: 42px;
     height: 42px;
@@ -222,14 +222,14 @@ body {
     left: 4px;
 }
 
-.player__arm-bar {
+.record-player__arm-bar {
     height: 160px;
     width: 8px;
     background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
-.player__arm-bar::before {
+.record-player__arm-bar::before {
     content: "";
     position: absolute;
     width: 15px;
@@ -241,7 +241,7 @@ body {
     background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
 }
 
-.player__arm-bar--lower {
+.record-player__arm-bar--lower {
     height: 75px;
     width: 8px;
     position: absolute;
@@ -251,7 +251,7 @@ body {
     background-image: linear-gradient(to right, #bbb, #ccc 40%, #999);
 }
 
-.player__arm-bar--lower::after {
+.record-player__arm-bar--lower::after {
     content: "";
     display: block;
     width: 15.6px;

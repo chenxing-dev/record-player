@@ -1,20 +1,25 @@
 - [ ] refactor(css): naming and specificity improvements
   - [x] refactor(css): convert IDs to BEM classes
+  - [x] fix(css): use a more descriptive block name, .record-player instead of .player
   - [ ] refactor(css): organize with CSS layers and section comments.
 - [ ] refactor(css): extract repeated colors and sizes into CSS variables
 - [ ] refactor(css): use clamp() for scalable sizing
 - [ ] feat(a11y): respect reduced motion preference
 - [ ] feat(controls): pause animations by default and toggle with a state class
 - [ ] perf(animation): replace blur filter with a soft radial/gradient overlay
-- [ ] fix(layout): center the record player in the viewport with top/left 50% and transform
+- [ ] feat(a11y): wrap the visual block in a semantic container
+  - [ ] feat(a11y): <main> with ARIA role img and label
+  - [ ] feat(a11y): decorative elements hidden from screen readers
+  - [ ] perf(css): mark glare as non-interactive
+- [ ] fix(layout): center the record player itself with top/left 50% and transform
 - [ ] fix(animation): record spins via the record surface, not the label
 - [ ] fix(arm): tonearm pivot transform-origin correction
 - [ ] chore(css): remove commented debug styles
-- [ ] refactor(label): replace hardcoded label with data-label attribute for easier customization
+- [ ] refactor(label): replace hardcoded label text in CSS with content from HTML data
 - [ ] feat(label): update the center-label artwork to a new design
 - [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] feat(controls): add play/pause functionality
-  - [ ] feat(controls): add play/pause toggle button
+  - [ ] feat(controls): add a play/pause toggle button
   - [ ] feat(animation): add needle drop effect on play start
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
   - [ ] feat(record): add vinyl groove texture
