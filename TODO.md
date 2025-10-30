@@ -1,0 +1,20 @@
+- [ ] refactor(styles): organize CSS into sections and adopt BEM naming
+- [ ] style(responsive): improve mobile layout and breakpoints
+- [ ] feat(controls): add play/pause functionality
+  - [ ] feat(controls): add play/pause toggle button
+  - [ ] style(animation): add needle drop effect on play start
+- [ ] feat(label): support customizable center-label artwork
+- [ ] style(visuals): make tonearm, record, spindle, and stylus more realistic
+  - [ ] style(record): add vinyl groove texture
+  - [ ] style(record): add surface reflection
+  - [ ] style(spindle): add metallic texture
+- [ ] feat(chassis): add wooden base for the player
+- [ ] style(shadow): add shadow under the record player
+- [ ] feat(controls): add volume control knob
+- [ ] feat(cover): add dust cover with load animation
+- [ ] style(background): add retro background pattern
+- [ ] style(cursor): add interactive custom cursors
+- [ ] fix(assets): optimize preview.gif size
+- [ ] docs(code): add comments for readability
+- [ ] docs(readme): update README with history and features
+- [ ] chore(deploy): set up automated deployment to GitHub Pages
