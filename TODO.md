@@ -1,20 +1,33 @@
-- [ ] refactor(styles): organize CSS into sections and adopt BEM naming
-- [ ] style(responsive): improve mobile layout and breakpoints
+- [ ] refactor(css): naming and specificity improvements
+  - [x] refactor(css): convert IDs to BEM classes
+  - [ ] refactor(css): organize with CSS layers and section comments.
+- [ ] refactor(css): extract repeated colors and sizes into CSS variables
+- [ ] refactor(css): use clamp() for scalable sizing
+- [ ] feat(a11y): respect reduced motion preference
+- [ ] feat(controls): pause animations by default and toggle with a state class
+- [ ] perf(animation): replace blur filter with a soft radial/gradient overlay
+- [ ] fix(layout): center the record player in the viewport with top/left 50% and transform
+- [ ] fix(animation): record spins via the record surface, not the label
+- [ ] fix(arm): tonearm pivot transform-origin correction
+- [ ] chore(css): remove commented debug styles
+- [ ] refactor(label): replace hardcoded label with data-label attribute for easier customization
+- [ ] feat(label): update the center-label artwork to a new design
+- [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] feat(controls): add play/pause functionality
   - [ ] feat(controls): add play/pause toggle button
-  - [ ] style(animation): add needle drop effect on play start
-- [ ] feat(label): support customizable center-label artwork
-- [ ] style(visuals): make tonearm, record, spindle, and stylus more realistic
-  - [ ] style(record): add vinyl groove texture
-  - [ ] style(record): add surface reflection
-  - [ ] style(spindle): add metallic texture
+  - [ ] feat(animation): add needle drop effect on play start
+- [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
+  - [ ] feat(record): add vinyl groove texture
+  - [ ] feat(record): add surface reflection
+  - [ ] feat(spindle): add metallic texture
 - [ ] feat(chassis): add wooden base for the player
-- [ ] style(shadow): add shadow under the record player
+- [ ] feat(shadow): add shadow under the record player
 - [ ] feat(controls): add volume control knob
 - [ ] feat(cover): add dust cover with load animation
-- [ ] style(background): add retro background pattern
-- [ ] style(cursor): add interactive custom cursors
-- [ ] fix(assets): optimize preview.gif size
-- [ ] docs(code): add comments for readability
+- [ ] feat(background): add retro background pattern
+- [ ] feat(cursor): add interactive custom cursors
+- [ ] docs(css): add comments for readability
+- [ ] chore(assets): take a screenshot and a preview.gif
+- [ ] perf(assets): optimize preview.gif size
 - [ ] docs(readme): update README with history and features
 - [ ] chore(deploy): set up automated deployment to GitHub Pages
