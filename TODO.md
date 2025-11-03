@@ -16,7 +16,7 @@
 - [x] fix(layout): clarify platter centering by adding explicit anchors
 - [x] fix(animation): move the spin animation from the label to the record surface
 - [ ] style(arm): tonearm repositioning for better realism
-  - [ ] fix(arm): reposition tonearm to the right side of the record
+  - [x] fix(arm): reposition tonearm to the right side of the record
   - [ ] fix(arm): adjust tonearm length to reach record edge
   - [ ] fix(arm): adjust tonearm angle to align with record grooves
 - [ ] fix(arm): join the tonearm bar and lower
