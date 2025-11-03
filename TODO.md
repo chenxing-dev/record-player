@@ -12,7 +12,7 @@
 - [x] fix(layout): center .record-player via absolute positioning
 - [x] feat(controls): add play/pause toggle button and related styles
 - [x] refactor(animation): pause animations by default and toggle with play/pause state
-- [ ] fix(layout): body centering is now redundant; remove related styles to reduce confusion
+- [x] refactor(layout): remove grid display from body to reduce confusion
 - [ ] fix(layout): clarify platter centering by adding explicit anchors
 - [x] fix(animation): move the spin animation from the label to the record surface
 - [ ] style(arm): tonearm repositioning for better realism
