@@ -42,7 +42,8 @@
         --spindle-size: 6px;
         --arm-base-size: 50px;
         --arm-bar-width: 8px;
-        --arm-bar-length: 160px;
+        /* make arm length relative to platter radius so it reliably reaches the record edge */
+        --arm-bar-length: calc(var(--platter-radius) + 10px);
         --arm-lower-length: 75px;
 
         /* Animation timings */
@@ -251,7 +252,7 @@
     }
 
     /* Tonearm */
-    .record-player__arm {
+    .record-player__tonearm {
         width: var(--arm-base-size);
         height: var(--arm-base-size);
         /* subtle metal look and shadow for depth */
@@ -266,7 +267,8 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
     }
 
-    .record-player__arm::before {
+    .record-player__tonearm::before {
+        /* visual pivot cap */
         content: "";
         width: 42px;
         height: 42px;
@@ -277,7 +279,8 @@
         left: 4px;
     }
 
-    .record-player__arm-bar {
+    /* Main arm element that extends from the pivot */
+    .record-player__arm {
         position: absolute;
         left: 50%;
         height: var(--arm-bar-length);
@@ -288,7 +291,8 @@
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
     }
 
-    .record-player__arm-bar::before {
+    .record-player__arm::before {
+        /* decorative shoulder on the arm */
         content: "";
         position: absolute;
         width: 15px;
@@ -300,17 +304,7 @@
         background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
     }
 
-    .record-player__arm-bar--lower {
-        height: var(--arm-lower-length);
-        width: var(--arm-bar-width);
-        position: absolute;
-        bottom: -180px;
-        left: 5.8px;
-        transform: rotate(25deg);
-        background-image: linear-gradient(to right, var(--metal-1), var(--metal-2) 40%, var(--metal-3));
-    }
-
-    .record-player__arm-bar--lower::after {
+    .record-player__cartridge {
         content: "";
         display: block;
         width: 15.6px;
@@ -345,7 +339,7 @@
         transform-origin: 50% 50%;
     }
 
-    .record-player .record-player__arm {
+    .record-player .record-player__tonearm {
         /* run an initial move then long move; both start paused */
         animation: move-init var(--move-init-duration) 1 forwards var(--move-init-delay), move var(--move-duration) infinite linear var(--move-delay);
         animation-play-state: paused, paused;
@@ -356,7 +350,7 @@
     #play-toggle:checked~main .record-player .record-player__record,
     #play-toggle:checked~main .record-player .record-player__glare::before,
     #play-toggle:checked~main .record-player .record-player__glare::after,
-    #play-toggle:checked~main .record-player .record-player__arm {
+    #play-toggle:checked~main .record-player .record-player__tonearm {
         animation-play-state: running !important;
     }
 }
@@ -381,7 +375,7 @@
             animation: none !important;
         }
 
-        .record-player__arm {
+        .record-player__tonearm {
             animation: none !important;
         }
     }

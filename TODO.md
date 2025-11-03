@@ -15,11 +15,11 @@
 - [x] refactor(layout): remove grid display from body to reduce confusion
 - [x] fix(layout): clarify platter centering by adding explicit anchors
 - [x] fix(animation): move the spin animation from the label to the record surface
-- [ ] style(arm): tonearm repositioning for better realism
-  - [x] fix(arm): reposition tonearm to the right side of the record
-  - [ ] fix(arm): adjust tonearm length to reach record edge
-  - [ ] fix(arm): adjust tonearm angle to align with record grooves
-- [ ] fix(arm): join the tonearm bar and lower
+- [x] fix(arm): reposition tonearm to the right side of the record
+- [ ] style(record): adjust record size to Baerwald vinyl record alignment (inner = 66mm, outer = 120.9mm)
+- [ ] fix(arm): adjust tonearm effective length (L) to match standard 232.8mm
+- [ ] fix(arm): pivot-to-spindle distance (d) to standard 215mm, Baerwald alignment
+- [ ] fix(arm): offset the cartridge/stylus rotation to 23.7° for Baerwald alignment
 - [ ] fix(arm): tonearm pivot transform-origin correction
 - [ ] refactor(css): use clamp() for scalable sizing
 - [ ] chore(css): remove commented debug styles
