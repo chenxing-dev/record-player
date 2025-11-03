@@ -307,21 +307,41 @@
         background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
     }
 
-    /* CSS-only control: if the checkbox is checked, animate as playing */
-    #play-toggle:checked~main .record-player .record-player__record {
+    /* CSS-only control: animations are present but paused by default so the
+       checkbox can toggle animation-play-state. */
+
+    .record-player .record-player__record {
+        /* record continuously spins but starts paused */
         animation: spin var(--spin-duration) infinite linear var(--spin-delay);
+        animation-play-state: paused;
+        transform-origin: 50% 50%;
     }
 
-    #play-toggle:checked~main .record-player .record-player__glare::before {
+    .record-player .record-player__glare::before {
         animation: teeter var(--teeter-duration) linear infinite;
+        animation-play-state: paused;
+        transform-origin: 50% 50%;
     }
 
-    #play-toggle:checked~main .record-player .record-player__glare::after {
+    .record-player .record-player__glare::after {
         animation: teeter-flip var(--teeter-duration) linear infinite;
+        animation-play-state: paused;
+        transform-origin: 50% 50%;
     }
 
-    #play-toggle:checked~main .record-player .record-player__arm {
+    .record-player .record-player__arm {
+        /* run an initial move then long move; both start paused */
         animation: move-init var(--move-init-duration) 1 forwards var(--move-init-delay), move var(--move-duration) infinite linear var(--move-delay);
+        animation-play-state: paused, paused;
+        transform-origin: 50% 50%;
+    }
+
+    /* When checked, set all related animations to running (play) */
+    #play-toggle:checked~main .record-player .record-player__record,
+    #play-toggle:checked~main .record-player .record-player__glare::before,
+    #play-toggle:checked~main .record-player .record-player__glare::after,
+    #play-toggle:checked~main .record-player .record-player__arm {
+        animation-play-state: running !important;
     }
 }
 

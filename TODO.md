@@ -10,12 +10,15 @@
   - [x] feat(a11y): decorative elements hidden from screen readers
   - [x] perf(css): mark glare as non-interactive
 - [x] fix(layout): center .record-player via absolute positioning
-- [ ] feat(controls): add play/pause functionality
-  - [x] feat(controls): add play/pause toggle button and related styles
-  - [ ] feat(animation): add needle drop effect on play start
+- [x] feat(controls): add play/pause toggle button and related styles
+- [x] refactor(animation): pause animations by default and toggle with play/pause state
 - [ ] fix(layout): body centering is now redundant; remove related styles to reduce confusion
 - [ ] fix(layout): clarify platter centering by adding explicit anchors
 - [x] fix(animation): move the spin animation from the label to the record surface
+- [ ] style(arm): tonearm repositioning for better realism
+  - [ ] fix(arm): reposition tonearm to the right side of the record
+  - [ ] fix(arm): adjust tonearm length to reach record edge
+  - [ ] fix(arm): adjust tonearm angle to align with record grooves
 - [ ] fix(arm): join the tonearm bar and lower
 - [ ] fix(arm): tonearm pivot transform-origin correction
 - [ ] refactor(css): use clamp() for scalable sizing
@@ -24,17 +27,21 @@
 - [ ] feat(label): update the center-label artwork to a new design
 - [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] refactor(css): add will-change sparingly where animations run continuously
-
+- [ ] feat(animation): add needle drop effect on play start
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
+  - [ ] feat(platter): add platter texture beneath the record
   - [ ] feat(record): add vinyl groove texture
-  
+  - [ ] feat(arm): add tonearm details and shading
   - [ ] feat(spindle): add metallic texture
+  - [ ] feat(stylus): add stylus tip detail
+- [ ] chore(css): clean up unused styles after feature additions
 - [ ] feat(chassis): add wooden base for the player
 - [ ] feat(shadow): add shadow under the record player
 - [ ] feat(controls): add volume control knob
 - [ ] feat(cover): add dust cover with load animation
 - [ ] feat(background): add retro background pattern
 - [ ] feat(cursor): add interactive custom cursors
+- [ ] fix(animation): pause spin animation when resetting the tonearm
 - [ ] docs(css): add comments for readability
 - [ ] chore(assets): take a screenshot and a preview.gif
 - [ ] perf(assets): optimize preview.gif size
