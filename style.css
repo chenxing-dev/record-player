@@ -35,11 +35,35 @@
         --metal-2: #ccc;
         --metal-3: #999;
 
-        /* Sizes */
-        --platter-size: 250px;
+        /* Sizing (Baerwald-based, scalable) */
+        /* Scale: pixels per millimeter (tweak to resize whole scene) */
+        --mm: 1px;
+
+        /* Physical recorded groove band (IEC) */
+        --inner-record-mm: 60.3;
+        --outer-record-mm: 146.1;
+
+        /* Record diameter = 2 * outer null radius */
+        --record-diameter-mm: calc(2 * var(--outer-record-mm));
+        --record-size: calc(var(--record-diameter-mm) * var(--mm));
+
+        /* Platter slightly larger than record */
+        --platter-overhang-mm: 2;
+        --platter-size: calc((var(--record-diameter-mm) + (2 * var(--platter-overhang-mm))) * var(--mm));
         --platter-radius: calc(var(--platter-size) / 2);
-        --label-size: 85px;
-        --spindle-size: 6px;
+
+        /* Label derived from inner recorded radius minus allowances */
+        --record-clearance-mm: 9;
+        --label-radius-mm: calc(var(--inner-record-mm) - var(--record-clearance-mm));
+        --label-diameter-mm: calc(2 * var(--label-radius-mm));
+        /* ≈ 102.6 mm */
+        --label-size: calc(var(--label-diameter-mm) * var(--mm));
+
+        /* Spindle hole ~7.2mm */
+        --spindle-diameter-mm: 7.2;
+        --spindle-size: calc(var(--spindle-diameter-mm) * var(--mm));
+
+        /* Arm and cartridge sizes */
         --arm-base-size: 50px;
         --arm-bar-width: 8px;
         /* make arm length relative to platter radius so it reliably reaches the record edge */
@@ -138,7 +162,8 @@
     }
 
     .record-player__record {
-        width: 98%;
+        /* exact record size derived from Baerwald nulls and scale */
+        width: var(--record-size);
         aspect-ratio: 1;
         border-radius: 50%;
         background: var(--color-black);
