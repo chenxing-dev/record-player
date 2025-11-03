@@ -10,7 +10,12 @@
   - [x] feat(a11y): decorative elements hidden from screen readers
   - [x] perf(css): mark glare as non-interactive
 - [x] fix(layout): center .record-player via absolute positioning
-- [ ] fix(animation): record spins via the record surface, not the label
+- [ ] feat(controls): add play/pause functionality
+  - [x] feat(controls): add play/pause toggle button and related styles
+  - [ ] feat(animation): add needle drop effect on play start
+- [ ] fix(layout): body centering is now redundant; remove related styles to reduce confusion
+- [ ] fix(layout): clarify platter centering by adding explicit anchors
+- [x] fix(animation): move the spin animation from the label to the record surface
 - [ ] fix(arm): join the tonearm bar and lower
 - [ ] fix(arm): tonearm pivot transform-origin correction
 - [ ] refactor(css): use clamp() for scalable sizing
@@ -18,10 +23,8 @@
 - [ ] refactor(label): replace hardcoded label text in CSS with content from HTML data
 - [ ] feat(label): update the center-label artwork to a new design
 - [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
-- [ ] feat(controls): add play/pause functionality
-  - [ ] feat(controls): add a play/pause toggle button
-  - [ ] feat(controls): wire the class toggle in CSS-only
-  - [ ] feat(animation): add needle drop effect on play start
+- [ ] refactor(css): add will-change sparingly where animations run continuously
+
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
   - [ ] feat(record): add vinyl groove texture
   

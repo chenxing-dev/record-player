@@ -10,6 +10,12 @@
 </head>
 
 <body>
+    <!-- CSS-only dev control: play/pause toggle -->
+    <input type="checkbox" id="play-toggle" class="sr-only" aria-label="Toggle animation">
+    <label for="play-toggle" class="play-toggle">
+        <span class="play-toggle__text play">Play</span>
+        <span class="play-toggle__text pause">Pause</span>
+    </label>
     <main role="img" aria-label="CSS illustration of a vinyl record player with a spinning record and tonearm.">
         <div class="record-player" aria-hidden="true">
             <div class="record-player__platter">
