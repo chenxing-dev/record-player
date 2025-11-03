@@ -124,7 +124,10 @@
         width: var(--platter-size);
         aspect-ratio: 1;
         border-radius: 50%;
+        /* center the platter relative to the .record-player anchor */
         position: absolute;
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%);
         display: grid;
         justify-items: center;
@@ -137,7 +140,8 @@
         aspect-ratio: 1;
         border-radius: 50%;
         background: var(--color-black);
-        position: absolute;
+        /* position relative inside the platter so transforms originate at center */
+        position: relative;
         display: grid;
         justify-items: center;
         align-items: center;
@@ -185,6 +189,10 @@
         aspect-ratio: 1;
         border-radius: 50%;
         position: absolute;
+        /* center the label within the record */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         box-shadow: 0 0 0 15px var(--shadow-ring), 0 0 0 17px var(--color-black), 0 0 0 19px var(--shadow-ring), 0 0 0 21px var(--color-black);
         border: 4px solid var(--border-dark);
         display: grid;
@@ -214,6 +222,10 @@
         pointer-events: none;
         /* non-interactive decorative layer */
         user-select: none;
+        /* anchor glare to platter center */
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     /* Glare shapes simulate reflection */
