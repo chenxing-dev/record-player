@@ -9,7 +9,7 @@
   - [x] feat(a11y): <main> with ARIA role img and label
   - [x] feat(a11y): decorative elements hidden from screen readers
   - [x] perf(css): mark glare as non-interactive
-- [ ] fix(layout): center the record player itself with top/left 50% and transform
+- [x] fix(layout): center .record-player via absolute positioning
 - [ ] fix(animation): record spins via the record surface, not the label
 - [ ] fix(arm): join the tonearm bar and lower
 - [ ] fix(arm): tonearm pivot transform-origin correction
