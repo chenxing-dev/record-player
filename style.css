@@ -76,6 +76,16 @@
         --arm-bar-length: calc(var(--eff-length-mm) * var(--mm));
         --arm-lower-length: 75px;
 
+        /* Cartridge styling */
+        --cart-width: 16px;
+        --cart-height: 26px;
+        --cart-radius: 2px;
+        --cart-color-1: #1e1e1e;
+        --cart-color-2: #0f0f0f;
+        --cart-accent: #d0d0d0;
+        --stylus-length: 10px;
+        --cantilever-angle: 22deg;
+
         /* Animation timings */
         --spin-duration: 1s;
         --teeter-duration: 1.3333333333s;
@@ -344,14 +354,21 @@
     .record-player__cartridge {
         content: "";
         display: block;
-        width: 15.6px;
-        height: 25px;
         position: absolute;
-        bottom: -25px;
-        left: -3.5px;
-        border-radius: 2px;
-        clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 100% 100%, 0 100%);
-        background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
+        /* center the cartridge horizontally at arm tip */
+        left: 50%;
+        transform: translateX(-50%);
+        /* place directly below the arm end */
+        width: var(--cart-width);
+        height: var(--cart-height);
+        bottom: calc(-1 * var(--cart-height));
+        border-radius: var(--cart-radius);
+        /* slightly tapered front with beveled shoulders */
+        clip-path: polygon(8% 0%, 92% 0%, 100% 35%, 100% 100%, 0 100%, 0 35%);
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 0 40%, rgba(0, 0, 0, 0.12) 60% 100%),
+            linear-gradient(to right, var(--cart-color-1), var(--cart-color-2));
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        pointer-events: none;
     }
 
     /* CSS-only control: animations are present but paused by default so the

@@ -16,6 +16,7 @@
 - [x] fix(layout): clarify platter centering by adding explicit anchors
 - [x] fix(animation): move the spin animation from the label to the record surface
 - [x] fix(arm): reposition tonearm to the right side of the record
+- [x] style(arm): update the cartridge styling by refining its shape
 - [ ] refactor(layout): update sizing variables for record player components
   - [x] style(record): adjust record size to standard vinyl record alignment (IEC, inner = 60.3mm, outer = 146.1mm)
   - [x] fix(arm): update tonearm  effective length (L) variables to match common tonearm lengths (222mm - 254mm)
