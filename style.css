@@ -71,6 +71,13 @@
         /* Mounting distance (pivot-to-spindle) in mm */
         --pivot-to-spindle-mm: 215;
         --mount-distance: calc(var(--pivot-to-spindle-mm) * var(--mm));
+        /* Mount angle control (degrees). */
+        --mount-angle: 30deg;
+        /* Fallback direction from platter center to pivot (above right at 30°) */
+        --mount-cos: 0.8660254;
+        /* cos(30°) */
+        --mount-sin: -0.5;
+        /* -sin(30°) for upward (negative Y) */
         /* Arm bar visual length, matched to effective length at the current scale. If your stylus graphic extends
               beyond the bar end, subtract that offset in mm from this value. */
         --arm-bar-length: calc(var(--eff-length-mm) * var(--mm));
@@ -94,6 +101,14 @@
         --spin-delay: 2s;
         --move-init-delay: 1s;
         --move-delay: 2s;
+    }
+
+    /* If CSS trig functions are supported, derive cos/sin from --mount-angle at runtime */
+    @supports (width: calc(cos(30deg) * 1px)) {
+        :root {
+            --mount-cos: calc(cos(var(--mount-angle)));
+            --mount-sin: calc(-1 * sin(var(--mount-angle)));
+        }
     }
 
     body {
@@ -305,8 +320,8 @@
         /* position pivot from platter center by mounting distance to the right */
         top: 50%;
         left: 50%;
-        /* center the pivot circle on its origin, then offset by mount distance */
-        translate: calc(var(--mount-distance) - 50%) -50%;
+        /* center the pivot circle on its origin, then offset by mount distance at 45° to top-right */
+        translate: calc(var(--mount-distance) * var(--mount-cos) - 50%) calc(var(--mount-distance) * var(--mount-sin) - 50%);
         /* uses independent transform longhand to compose with transform animations */
         display: grid;
         justify-content: center;

@@ -22,7 +22,9 @@
   - [x] fix(arm): update tonearm  effective length (L) variables to match common tonearm lengths (222mm - 254mm)
   - [x] fix(arm): add a pivot-to-spindle variable, center the pivot circle, and offset by mount distance
   - [x] fix(arm): update the stylus to use a 23.7° angle for Baerwald alignment
-- [ ] fix(arm): tonearm pivot transform-origin correction
+  - [x] fix(arm): adjust tonearm mounting position and angle
+  - [ ] fix(animation): fix tonearm animation rotation to match new mounting angle
+- [x] fix(arm): switch pivot rotation keyframes to use rotate() instead of transform
 - [ ] refactor(css): use clamp() for scalable sizing
 - [ ] chore(css): remove commented debug styles
 - [ ] refactor(label): replace hardcoded label text in CSS with content from HTML data
