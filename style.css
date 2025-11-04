@@ -66,8 +66,11 @@
         /* Arm and cartridge sizes */
         --arm-base-size: 50px;
         --arm-bar-width: 8px;
-        /* make arm length relative to platter radius so it reliably reaches the record edge */
-        --arm-bar-length: calc(var(--platter-radius) + 10px);
+        /* Effective tonearm length (pivot center to stylus tip) in mm */
+        --eff-length-mm: 232.8;
+        /* Arm bar visual length, matched to effective length at the current scale. If your stylus graphic extends
+              beyond the bar end, subtract that offset in mm from this value. */
+        --arm-bar-length: calc(var(--eff-length-mm) * var(--mm));
         --arm-lower-length: 75px;
 
         /* Animation timings */

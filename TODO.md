@@ -18,7 +18,7 @@
 - [x] fix(arm): reposition tonearm to the right side of the record
 - [ ] refactor(layout): update sizing variables for record player components
   - [x] style(record): adjust record size to standard vinyl record alignment (IEC, inner = 60.3mm, outer = 146.1mm)
-  - [ ] fix(arm): adjust tonearm effective length (L) to match standard 232.8mm
+  - [x] fix(arm): update tonearm  effective length (L) variables to match common tonearm lengths (222mm - 254mm)
   - [ ] fix(arm): pivot-to-spindle distance (d) to standard 215mm, Baerwald alignment
   - [ ] fix(arm): offset the cartridge/stylus rotation to 23.7° for Baerwald alignment
 - [ ] fix(arm): tonearm pivot transform-origin correction
