@@ -480,11 +480,11 @@
 
 @keyframes move-init {
     from {
-        transform: rotate(0deg);
+        rotate: 0deg;
     }
 
     to {
-        transform: rotate(12deg);
+        rotate: 12deg;
     }
 }
 
@@ -492,10 +492,10 @@
 
     0%,
     100% {
-        transform: rotate(12deg);
+        rotate: 12deg;
     }
 
     97% {
-        transform: rotate(32deg);
+        rotate: 32deg;
     }
 }
