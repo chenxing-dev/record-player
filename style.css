@@ -68,6 +68,9 @@
         --arm-bar-width: 8px;
         /* Effective tonearm length (pivot center to stylus tip) in mm */
         --eff-length-mm: 232.8;
+        /* Mounting distance (pivot-to-spindle) in mm */
+        --pivot-to-spindle-mm: 215;
+        --mount-distance: calc(var(--pivot-to-spindle-mm) * var(--mm));
         /* Arm bar visual length, matched to effective length at the current scale. If your stylus graphic extends
               beyond the bar end, subtract that offset in mm from this value. */
         --arm-bar-length: calc(var(--eff-length-mm) * var(--mm));
@@ -146,6 +149,9 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        /* Give the container a size so percentage positioning is reliable */
+        width: var(--platter-size);
+        height: var(--platter-size);
     }
 
     .record-player__platter {
@@ -279,23 +285,26 @@
         /* a softer diagonal glare */
     }
 
-    /* Tonearm */
-    .record-player__tonearm {
+    /* Tonearm pivot */
+    .record-player__pivot {
         width: var(--arm-base-size);
         height: var(--arm-base-size);
         /* subtle metal look and shadow for depth */
         background-image: linear-gradient(180deg, #ddd, #bfbfbf);
         border-radius: 50%;
         position: absolute;
-        /* anchor the pivot near the platter edge using the platter radius */
-        left: var(--platter-radius);
-        top: calc(-1 * var(--platter-radius));
+        /* position pivot from platter center by mounting distance to the right */
+        top: 50%;
+        left: 50%;
+        /* center the pivot circle on its origin, then offset by mount distance */
+        translate: calc(var(--mount-distance) - 50%) -50%;
+        /* uses independent transform longhand to compose with transform animations */
         display: grid;
         justify-content: center;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
     }
 
-    .record-player__tonearm::before {
+    .record-player__pivot::before {
         /* visual pivot cap */
         content: "";
         width: 42px;
@@ -367,7 +376,7 @@
         transform-origin: 50% 50%;
     }
 
-    .record-player .record-player__tonearm {
+    .record-player .record-player__pivot {
         /* run an initial move then long move; both start paused */
         animation: move-init var(--move-init-duration) 1 forwards var(--move-init-delay), move var(--move-duration) infinite linear var(--move-delay);
         animation-play-state: paused, paused;
@@ -378,7 +387,7 @@
     #play-toggle:checked~main .record-player .record-player__record,
     #play-toggle:checked~main .record-player .record-player__glare::before,
     #play-toggle:checked~main .record-player .record-player__glare::after,
-    #play-toggle:checked~main .record-player .record-player__tonearm {
+    #play-toggle:checked~main .record-player .record-player__pivot {
         animation-play-state: running !important;
     }
 }
@@ -403,7 +412,7 @@
             animation: none !important;
         }
 
-        .record-player__tonearm {
+        .record-player__pivot {
             animation: none !important;
         }
     }
