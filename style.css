@@ -84,7 +84,7 @@
         --cart-color-2: #0f0f0f;
         --cart-accent: #d0d0d0;
         --stylus-length: 10px;
-        --cantilever-angle: 22deg;
+        --stylus-angle: 23.7deg;
 
         /* Animation timings */
         --spin-duration: 1s;
@@ -124,7 +124,6 @@
         z-index: 10;
         background: rgba(0, 0, 0, 0.7);
         color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
         padding: 8px 12px;
         border-radius: 999px;
         font: 500 14px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -357,7 +356,8 @@
         position: absolute;
         /* center the cartridge horizontally at arm tip */
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%) rotate(var(--stylus-angle));
+        transform-origin: top center;
         /* place directly below the arm end */
         width: var(--cart-width);
         height: var(--cart-height);
