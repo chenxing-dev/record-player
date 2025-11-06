@@ -25,7 +25,6 @@
 - [x] fix(animation): fix tonearm animation rotation to match new mounting angle
 - [x] fix(arm): switch pivot rotation keyframes to use rotate() instead of transform
 - [x] fix(arm): convert sizes to mm-based variables for scaling
-- [ ] refactor(css): use clamp() for scalable sizing
 - [ ] chore(css): remove commented debug styles
 - [ ] refactor(label): replace hardcoded label text in CSS with content from HTML data
 - [ ] feat(label): update the center-label artwork to a new design

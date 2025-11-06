@@ -63,7 +63,7 @@
         --spindle-diameter-mm: 7.2;
         --spindle-size: calc(var(--spindle-diameter-mm) * var(--mm));
 
-        /* Arm and cartridge sizes (mm-based, scaled by --ui-scale) */
+        /* Arm and cartridge sizes (mm-based) */
         --arm-base-mm: 50;
         --arm-base-size: calc(var(--arm-base-mm) * var(--mm));
         --arm-bar-width-mm: 8;
@@ -272,7 +272,7 @@
             0 0 0 calc(var(--label-ring-2-mm) * var(--mm)) var(--color-black),
             0 0 0 calc(var(--label-ring-3-mm) * var(--mm)) var(--shadow-ring),
             0 0 0 calc(var(--label-ring-4-mm) * var(--mm)) var(--color-black);
-        border: calc(4px * var(--ui-scale)) solid var(--border-dark);
+        border: 4px solid var(--border-dark);
         display: grid;
         align-items: center;
         justify-content: center;
