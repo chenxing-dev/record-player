@@ -63,9 +63,11 @@
         --spindle-diameter-mm: 7.2;
         --spindle-size: calc(var(--spindle-diameter-mm) * var(--mm));
 
-        /* Arm and cartridge sizes */
-        --arm-base-size: 50px;
-        --arm-bar-width: 8px;
+        /* Arm and cartridge sizes (mm-based, scaled by --ui-scale) */
+        --arm-base-mm: 50;
+        --arm-base-size: calc(var(--arm-base-mm) * var(--mm));
+        --arm-bar-width-mm: 8;
+        --arm-bar-width: calc(var(--arm-bar-width-mm) * var(--mm));
         /* Effective tonearm length (pivot center to stylus tip) in mm */
         --eff-length-mm: 232.8;
         /* Mounting distance (pivot-to-spindle) in mm */
@@ -79,17 +81,32 @@
         /* Arm bar visual length, matched to effective length at the current scale. If your stylus graphic extends
               beyond the bar end, subtract that offset in mm from this value. */
         --arm-bar-length: calc(var(--eff-length-mm) * var(--mm));
-        --arm-lower-length: 75px;
+        --arm-lower-length-mm: 75;
+        --arm-lower-length: calc(var(--arm-lower-length-mm) * var(--mm));
 
         /* Cartridge styling */
-        --cart-width: 16px;
-        --cart-height: 26px;
-        --cart-radius: 2px;
+        --cart-width-mm: 16;
+        --cart-height-mm: 26;
+        --cart-radius-mm: 2;
+        --cart-width: calc(var(--cart-width-mm) * var(--mm));
+        --cart-height: calc(var(--cart-height-mm) * var(--mm));
+        --cart-radius: calc(var(--cart-radius-mm) * var(--mm));
         --cart-color-1: #1e1e1e;
         --cart-color-2: #0f0f0f;
         --cart-accent: #d0d0d0;
-        --stylus-length: 10px;
+        --stylus-length-mm: 10;
+        --stylus-length: calc(var(--stylus-length-mm) * var(--mm));
         --stylus-angle: 23.7deg;
+
+        /* Label ring visual thicknesses (mm-based cosmetic) */
+        --label-ring-1-mm: 15;
+        --label-ring-2-mm: 17;
+        --label-ring-3-mm: 19;
+        --label-ring-4-mm: 21;
+
+        /* Pivot cap visuals */
+        --pivot-cap-size-mm: 42;
+        --pivot-cap-offset-mm: 4;
 
         /* Animation timings */
         --spin-duration: 1s;
@@ -250,8 +267,12 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 0 15px var(--shadow-ring), 0 0 0 17px var(--color-black), 0 0 0 19px var(--shadow-ring), 0 0 0 21px var(--color-black);
-        border: 4px solid var(--border-dark);
+        box-shadow:
+            0 0 0 calc(var(--label-ring-1-mm) * var(--mm)) var(--shadow-ring),
+            0 0 0 calc(var(--label-ring-2-mm) * var(--mm)) var(--color-black),
+            0 0 0 calc(var(--label-ring-3-mm) * var(--mm)) var(--shadow-ring),
+            0 0 0 calc(var(--label-ring-4-mm) * var(--mm)) var(--color-black);
+        border: calc(4px * var(--ui-scale)) solid var(--border-dark);
         display: grid;
         align-items: center;
         justify-content: center;
@@ -328,13 +349,13 @@
     .record-player__pivot::before {
         /* visual pivot cap */
         content: "";
-        width: 42px;
-        height: 42px;
+        width: calc(var(--pivot-cap-size-mm) * var(--mm));
+        height: calc(var(--pivot-cap-size-mm) * var(--mm));
         background: rgb(197, 196, 196);
         border-radius: 50%;
         position: absolute;
-        top: 4px;
-        left: 4px;
+        top: calc(var(--pivot-cap-offset-mm) * var(--mm));
+        left: calc(var(--pivot-cap-offset-mm) * var(--mm));
     }
 
     /* Main arm element that extends from the pivot */
@@ -353,8 +374,8 @@
         /* decorative shoulder on the arm */
         content: "";
         position: absolute;
-        width: 15px;
-        height: 30px;
+        width: calc(15 * var(--mm));
+        height: calc(30 * var(--mm));
         top: 0;
         left: 50%;
         transform: translateX(-50%);
