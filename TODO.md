@@ -27,7 +27,7 @@
 - [x] fix(arm): convert sizes to mm-based variables for scaling
 - [x] chore(css): remove commented debug styles
 - [x] refactor(label): replace hardcoded label text in CSS with content from HTML data attributes
-- [ ] feat(label): update the center-label artwork to a new design
+- [x] feat(label): update the center-label artwork to a new design
 - [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] refactor(css): add will-change sparingly where animations run continuously
 - [ ] feat(animation): add needle drop effect on play start

@@ -102,6 +102,9 @@
         --stylus-length-mm: 10;
         --stylus-length: calc(var(--stylus-length-mm) * var(--mm));
         --stylus-angle: 23.7deg;
+        /* Cartridge overlap: lift cartridge upward to fully cover arm tube end (addresses exposed bottom-right corner) */
+        --cart-attach-overlap-mm: 3;
+        --cart-attach-overlap: calc(var(--cart-attach-overlap-mm) * var(--mm));
 
 
         /* Pivot cap visuals */
@@ -117,12 +120,46 @@
         --move-init-delay: 1s;
         --move-delay: 2s;
 
-        /* Arm rotation derived from geometry (0deg = downwards).
-              Start near right-down: 90deg - (mount angle + acos((d^2 + L^2 - R_outer^2) / 2dL))
-              End further clockwise: 90deg - (mount angle + acos((d^2 + L^2 - R_inner^2) / 2dL))
-          */
-        --arm-rotate-start: calc(90deg - (var(--mount-angle) + acos(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--eff-length-mm) * var(--eff-length-mm)) - (var(--outer-record-mm) * var(--outer-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--eff-length-mm)))));
-        --arm-rotate-end: calc(90deg - (var(--mount-angle) + acos(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--eff-length-mm) * var(--eff-length-mm)) - (var(--inner-record-mm) * var(--inner-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--eff-length-mm)))));
+        /*
+        ==========================================
+        Tonearm rotation geometry
+        ==========================================
+        Goal: rotate until bottom-left corner of the arm tube reaches the inner recorded radius (debug green ring).
+
+        Definitions:
+            d        = pivot-to-spindle-mm
+            L        = eff-length-mm (stylus tip)
+            w        = arm-bar-width-mm
+            s        = stylus-length-mm (stylus protrusion beyond tube)
+            R_outer  = outer-record-mm (outer groove radius)
+            R_inner  = inner-record-mm (inner groove radius)
+
+        Target point: tube bottom-left corner (not stylus tip).
+            Corner effective length Lc = L - (s + w/2)
+
+        Law of cosines (corner geometry):
+            cos(θ) = (d^2 + Lc^2 - R^2) / (2 d Lc)
+            θ = acos( (d^2 + Lc^2 - R^2) / (2 d Lc) ) 
+
+        Rotation convention (0deg points downward):
+            rotate = 90deg - (mount-angle + θ)
+
+        Implementation approach (modern CSS):
+            - Expose intermediate cos ratios for clarity (auditable values).
+            - Use acos() directly to obtain θ.
+        */
+        /* Corner geometry offsets */
+        --corner-offset-mm: calc(var(--stylus-length-mm) + (var(--arm-bar-width-mm) / 2));
+        --corner-effective-length-mm: calc(var(--eff-length-mm) - var(--corner-offset-mm));
+        /* Law-of-cosines ratios (cos θ) for outer & inner radii (unitless). */
+        --lawcos-outer: calc(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--corner-effective-length-mm) * var(--corner-effective-length-mm)) - (var(--outer-record-mm) * var(--outer-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--corner-effective-length-mm)));
+        --lawcos-inner: calc(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--corner-effective-length-mm) * var(--corner-effective-length-mm)) - (var(--inner-record-mm) * var(--inner-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--corner-effective-length-mm)));
+        /* Dynamic arc-cosine angles (requires modern CSS trig). */
+        --arm-theta-outer: acos(var(--lawcos-outer));
+        --arm-theta-inner: acos(var(--lawcos-inner));
+        /* Final rotation angles expressed via formula components (no magic numbers). */
+        --arm-rotate-start: calc(90deg - (var(--mount-angle) + var(--arm-theta-outer)));
+        --arm-rotate-end: calc(90deg - (var(--mount-angle) + var(--arm-theta-inner)));
     }
 
     body {
@@ -208,6 +245,39 @@
         box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
     }
 
+    /* --- DEBUG RINGS (temporary): visualize key radii ---
+       - Outer recorded radius (2 * --outer-record-mm)
+       - Inner recorded radius (2 * --inner-record-mm)
+       These are drawn relative to the platter center. */
+    .record-player__platter::before,
+    .record-player__platter::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 6;
+        /* above record */
+    }
+
+    /* Outer recorded radius ring */
+    .record-player__platter::before {
+        width: calc(2 * var(--outer-record-mm) * var(--mm));
+        height: calc(2 * var(--outer-record-mm) * var(--mm));
+        border: 2px dashed rgba(0, 188, 212, 0.8);
+        /* cyan */
+    }
+
+    /* Inner recorded radius ring */
+    .record-player__platter::after {
+        width: calc(2 * var(--inner-record-mm) * var(--mm));
+        height: calc(2 * var(--inner-record-mm) * var(--mm));
+        border: 2px dashed rgba(139, 195, 74, 0.9);
+        /* green */
+    }
+
     .record-player__record {
         /* exact record size derived from Baerwald nulls and scale */
         width: var(--record-size);
@@ -255,6 +325,23 @@
         transform: translate(-50%, -50%);
         border-radius: 50%;
         z-index: 1;
+    }
+
+    /* Label radius debug ring (derived): diameter = 2 * --label-radius-mm */
+    .record-player__record::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(2 * var(--label-radius-mm) * var(--mm));
+        height: calc(2 * var(--label-radius-mm) * var(--mm));
+        border: 1px dashed rgba(255, 152, 0, 0.9);
+        /* amber */
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 7;
+        /* above platter rings */
     }
 
     .record-player__label {
@@ -384,6 +471,9 @@
         transform: translateX(-50%);
         transform-origin: top center;
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+        /* DEBUG: visual outline of arm tube */
+        outline: 1px dashed rgba(255, 0, 0, 0.6);
+        outline-offset: -1px;
     }
 
     .record-player__arm::before {
@@ -399,9 +489,26 @@
         background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
     }
 
+    /* DEBUG: mark the transform-origin (top center of arm) */
+    .record-player__arm::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(8 * var(--mm));
+        height: calc(8 * var(--mm));
+        border: 1px solid rgba(255, 0, 0, 0.8);
+        background: rgba(255, 0, 0, 0.15);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10;
+    }
+
     .record-player__cartridge {
         content: "";
-        display: block;
+        /* display: block; */
+        display: none;
         position: absolute;
         /* center the cartridge horizontally at arm tip */
         left: 50%;
@@ -410,7 +517,8 @@
         /* place directly below the arm end */
         width: var(--cart-width);
         height: var(--cart-height);
-        bottom: calc(-1 * var(--cart-height));
+        /* Lift cartridge slightly upward to overlap arm tube and hide exposed corner */
+        bottom: calc(-1 * var(--cart-height) + var(--cart-attach-overlap));
         border-radius: var(--cart-radius);
         /* slightly tapered front with beveled shoulders */
         clip-path: polygon(8% 0%, 92% 0%, 100% 35%, 100% 100%, 0 100%, 0 35%);
@@ -418,6 +526,9 @@
             linear-gradient(to right, var(--cart-color-1), var(--cart-color-2));
         box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
         pointer-events: none;
+        /* DEBUG: outline cartridge to inspect its corners */
+        outline: 1px dashed rgba(0, 0, 255, 0.7);
+        outline-offset: -1px;
     }
 
     /* CSS-only control: animations are present but paused by default so the
@@ -538,13 +649,12 @@
 }
 
 @keyframes move {
-
-    0%,
-    100% {
-        rotate: var(--arm-rotate-start);
+    0% {
+        rotate: var(--arm-rotate-end);
     }
 
-    97% {
+    97%,
+    100% {
         rotate: var(--arm-rotate-end);
     }
 }
