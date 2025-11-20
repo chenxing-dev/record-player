@@ -26,7 +26,7 @@
 - [x] fix(arm): switch pivot rotation keyframes to use rotate() instead of transform
 - [x] fix(arm): convert sizes to mm-based variables for scaling
 - [x] chore(css): remove commented debug styles
-- [ ] refactor(label): replace hardcoded label text in CSS with content from HTML data
+- [x] refactor(label): replace hardcoded label text in CSS with content from HTML data attributes
 - [ ] feat(label): update the center-label artwork to a new design
 - [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] refactor(css): add will-change sparingly where animations run continuously

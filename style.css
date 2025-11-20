@@ -278,7 +278,7 @@
     }
 
     .record-player__label::after {
-        content: "CHEN.XING";
+        content: attr(data-label);
         color: black;
         font-family: "Roboto", sans-serif;
         font-weight: 300;
