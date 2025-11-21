@@ -48,6 +48,26 @@
         --inner-record-mm: 60.3;
         --outer-record-mm: 146.1;
 
+        /* Record groove band radii and groove detail */
+        --record-radius: calc(var(--outer-record-mm) * var(--mm));
+        --groove-inner-r: calc(var(--inner-record-mm) * var(--mm));
+        --groove-outer-r: calc(var(--outer-record-mm) * var(--mm));
+        /* Base groove spacing (legacy single track) */
+        --groove-line: 1px;
+        /* visible ring thickness */
+        --groove-gap: 1px;
+        /* gap between rings */
+        /* Multi-track groove spacing to break uniformity */
+        --groove-line-1: 1px;
+        --groove-gap-1: 1.25px;
+        --groove-line-2: 0.5px;
+        --groove-gap-2: 1.75px;
+        --groove-line-3: 0.75px;
+        --groove-gap-3: 1.35px;
+        --groove-alpha-1: 0.042;
+        --groove-alpha-2: 0.028;
+        --groove-alpha-3: 0.032;
+
         /* Record diameter = 2 * outer null radius */
         --record-diameter-mm: calc(2 * var(--outer-record-mm));
         --record-size: calc(var(--record-diameter-mm) * var(--mm));
@@ -272,30 +292,43 @@
         display: grid;
         justify-items: center;
         align-items: center;
-        background-image: radial-gradient(circle at center,
-                transparent 32.75%,
-                rgba(255, 255, 255, 0.05) 33%,
-                rgba(255, 255, 255, 0.05) 38%,
-                transparent 38.25%,
-                transparent 38.75%,
-                rgba(255, 255, 255, 0.05) 39%,
-                rgba(255, 255, 255, 0.05) 48%,
-                transparent 48.25%,
-                transparent 48.75%,
-                rgba(255, 255, 255, 0.05) 49%,
-                rgba(255, 255, 255, 0.05) 57%,
-                transparent 57.25%,
-                transparent 57.75%,
-                rgba(255, 255, 255, 0.05) 58%,
-                rgba(255, 255, 255, 0.05) 62%,
-                transparent 62.25%,
-                transparent 62.75%,
-                rgba(255, 255, 255, 0.05) 63%,
-                rgba(255, 255, 255, 0.05) 69%,
-                transparent 69.25%);
+        /* Layered gradients:
+           1) Inner mask to keep center label area flat (black) up to inner groove radius.
+           2) Repeating fine grooves from inner to outer recorded radius, mm-based spacing.
+           3) Soft highlight near inner band edge.
+           4) Soft outer rim lift near the recorded edge. */
+        background-image:
+            /* Outer cap: hide grooves beyond recorded band */
+            radial-gradient(circle at center,
+                rgba(0, 0, 0, 0) 0 var(--groove-outer-r),
+                var(--color-black) calc(var(--groove-outer-r) + 0.2px)),
+            /* Inner cap: keep center flat to inner groove radius */
+            radial-gradient(circle at center,
+                var(--color-black) 0 var(--groove-inner-r),
+                rgba(0, 0, 0, 0) calc(var(--groove-inner-r) + 0.2px)),
+            /* Multi-track grooves with varied spacing to avoid regularity */
+            repeating-radial-gradient(circle at center,
+                rgba(255, 255, 255, var(--groove-alpha-1)) var(--groove-inner-r) calc(var(--groove-inner-r) + var(--groove-line-1)),
+                rgba(0, 0, 0, 0) calc(var(--groove-inner-r) + var(--groove-line-1)) calc(var(--groove-inner-r) + var(--groove-line-1) + var(--groove-gap-1))),
+            repeating-radial-gradient(circle at center,
+                rgba(255, 255, 255, var(--groove-alpha-2)) var(--groove-inner-r) calc(var(--groove-inner-r) + var(--groove-line-2)),
+                rgba(0, 0, 0, 0) calc(var(--groove-inner-r) + var(--groove-line-2)) calc(var(--groove-inner-r) + var(--groove-line-2) + var(--groove-gap-2))),
+            repeating-radial-gradient(circle at center,
+                rgba(255, 255, 255, var(--groove-alpha-3)) var(--groove-inner-r) calc(var(--groove-inner-r) + var(--groove-line-3)),
+                rgba(0, 0, 0, 0) calc(var(--groove-inner-r) + var(--groove-line-3)) calc(var(--groove-inner-r) + var(--groove-line-3) + var(--groove-gap-3))),
+            /* Inner and outer soft shading for depth */
+            radial-gradient(circle at center,
+                rgba(255, 255, 255, 0.05) var(--groove-inner-r),
+                rgba(255, 255, 255, 0.02) calc(var(--groove-inner-r) + 6px),
+                rgba(255, 255, 255, 0.0) calc(var(--groove-inner-r) + 14px)),
+            radial-gradient(circle at center,
+                rgba(255, 255, 255, 0.0) calc(var(--groove-outer-r) - 24px),
+                rgba(255, 255, 255, 0.04) calc(var(--groove-outer-r) - 8px),
+                rgba(255, 255, 255, 0.06) var(--groove-outer-r));
         overflow: clip;
     }
 
+    /* Spindle hole */
     .record-player__record::before {
         content: "";
         position: absolute;
