@@ -86,8 +86,10 @@
         /* Arm bar visual length, matched to effective length at the current scale. If your stylus graphic extends
               beyond the bar end, subtract that offset in mm from this value. */
         --arm-bar-length: calc(var(--eff-length-mm) * var(--mm));
-        --arm-lower-length-mm: 75;
-        --arm-lower-length: calc(var(--arm-lower-length-mm) * var(--mm));
+
+        /* Tonearm decorative shoulder geometry */
+        --arm-shoulder-width-mm: 15;
+        --arm-shoulder-height-mm: 30;
 
         /* Cartridge styling */
         --cart-width-mm: 16;
@@ -105,7 +107,6 @@
         /* Cartridge overlap: lift cartridge upward to fully cover arm tube end (addresses exposed bottom-right corner) */
         --cart-attach-overlap-mm: 3;
         --cart-attach-overlap: calc(var(--cart-attach-overlap-mm) * var(--mm));
-
 
         /* Pivot cap visuals */
         --pivot-cap-size-mm: 42;
@@ -441,52 +442,50 @@
         left: calc(var(--pivot-cap-offset-mm) * var(--mm));
     }
 
+    /* Debug: effective length L (pivot center to stylus tip) */
+    .record-player.debug .record-player__pivot::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: var(--arm-bar-length);
+        border-left: 1px dashed rgba(0, 0, 255, 0.7);
+        z-index: 14;
+        pointer-events: none;
+    }
+
+
     /* Main arm element that extends from the pivot */
     .record-player__arm {
         position: absolute;
         left: 50%;
+        top: 50%;
         height: var(--arm-bar-length);
         width: var(--arm-bar-width);
         background-image: linear-gradient(to right, var(--metal-1), var(--metal-2) 40%, var(--metal-3));
+        /* anchor arm's top center at pivot center so length extends outward from true pivot */
         transform: translateX(-50%);
         transform-origin: top center;
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-        /* Arm outline only in debug mode */
         outline: none;
-    }
-
-    .record-player.debug .record-player__arm {
-        outline: 1px dashed rgba(255, 0, 0, 0.6);
-        outline-offset: -1px;
     }
 
     .record-player__arm::before {
         /* decorative shoulder on the arm */
         content: "";
         position: absolute;
-        width: calc(15 * var(--mm));
-        height: calc(30 * var(--mm));
-        top: 0;
+        width: calc(var(--arm-shoulder-width-mm) * var(--mm));
+        height: calc(var(--arm-shoulder-height-mm) * var(--mm));
+        /* move shoulder above the arm tube using its own height */
+        top: calc(-1 * var(--arm-shoulder-height-mm) * var(--mm));
         left: 50%;
         transform: translateX(-50%);
         clip-path: polygon(0% 50%, 25% 100%, 75% 100%, 100% 50%, 100% 0, 0 0);
-        background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
-    }
-
-    /* Transform-origin marker only in debug */
-    .record-player.debug .record-player__arm::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: calc(8 * var(--mm));
-        height: calc(8 * var(--mm));
-        border: 1px solid rgba(255, 0, 0, 0.8);
-        background: rgba(255, 0, 0, 0.15);
-        border-radius: 50%;
+        background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.04) 55%), linear-gradient(to right, #222, #111);
         pointer-events: none;
-        z-index: 10;
+        z-index: 5;
     }
 
     .record-player__cartridge {
@@ -516,6 +515,42 @@
     .record-player.debug .record-player__cartridge {
         outline: 1px dashed rgba(0, 0, 255, 0.7);
         outline-offset: -1px;
+    }
+
+    /* Debug: static dashed line from pivot toward spindle (mount distance labeled d) */
+    .record-player.debug::before,
+    .record-player.debug::after {
+        pointer-events: none;
+    }
+
+    .record-player.debug::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--mount-distance);
+        height: 0;
+        border-top: 1px dashed rgba(255, 0, 0, 0.7);
+        /* rotate along negative mount angle so it points from center to pivot */
+        transform: rotate(calc(-1 * var(--mount-angle)));
+        transform-origin: left center;
+        z-index: 15;
+    }
+
+    .record-player.debug::after {
+        content: "d";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* rotate to align with line, then translate half its length */
+        transform: rotate(calc(-1 * var(--mount-angle))) translateX(calc(var(--mount-distance) / 2)) translateY(-50%);
+        transform-origin: left center;
+        font: 600 10px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        color: rgba(255, 0, 0, 0.85);
+        background: rgba(255, 255, 255, 0.6);
+        padding: 0 2px;
+        border-radius: 2px;
+        z-index: 16;
     }
 
     /* CSS-only control: animations are present but paused by default so the
