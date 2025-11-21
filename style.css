@@ -75,6 +75,8 @@
         /* Platter slightly larger than record */
         --platter-overhang-mm: 2;
         --platter-size: calc((var(--record-diameter-mm) + (2 * var(--platter-overhang-mm))) * var(--mm));
+        /* helper for responsive scaling */
+        --platter-diameter-mm: calc(var(--record-diameter-mm) + (2 * var(--platter-overhang-mm)));
         --platter-radius: calc(var(--platter-size) / 2);
 
         /* Label derived from inner recorded radius minus allowances */
@@ -646,6 +648,58 @@
 
         .record-player__pivot {
             animation: none !important;
+        }
+    }
+}
+
+/* =========================================
+   Responsive: scale by viewport to fit
+   ========================================= */
+@media (max-width: 480px) {
+    @layer base {
+        :root {
+            /* Smaller on phones: reduce overall size */
+            --mm: calc(72vmin / var(--platter-diameter-mm));
+            --label-font-size: clamp(8px, 2vmin, 11px);
+        }
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    @layer base {
+        :root {
+            /* Enlarge on tablets */
+            --mm: calc(100vmin / var(--platter-diameter-mm));
+            --label-font-size: clamp(10px, 1.8vmin, 14px);
+        }
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    @layer base {
+        :root {
+            /* Short landscape screens (phones) */
+            --mm: calc(60vmin / var(--platter-diameter-mm));
+        }
+    }
+}
+
+/* Medium desktop: scale up from base size */
+@media (min-width: 769px) and (max-width: 1199px) {
+    @layer base {
+        :root {
+            --mm: calc(55vmin / var(--record-diameter-mm));
+            --label-font-size: clamp(11px, 1.4vmin, 15px);
+        }
+    }
+}
+
+/* Large desktop: even larger presentation */
+@media (min-width: 1200px) {
+    @layer base {
+        :root {
+            --mm: calc(62vmin / var(--record-diameter-mm));
+            --label-font-size: clamp(12px, 1.2vmin, 16px);
         }
     }
 }

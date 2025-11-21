@@ -28,7 +28,7 @@
 - [x] chore(css): remove commented debug styles
 - [x] refactor(label): replace hardcoded label text in CSS with content from HTML data attributes
 - [x] feat(label): update the center-label artwork to a new design
-- [ ] refactor(responsive): structure media queries for better mobile layout and breakpoints
+- [x] refactor(responsive): structure media queries for better mobile layout and breakpoints
 - [ ] refactor(css): add will-change sparingly where animations run continuously
 - [ ] feat(animation): add needle drop effect on play start
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
