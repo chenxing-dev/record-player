@@ -122,42 +122,32 @@
 
         /*
         ==========================================
-        Tonearm rotation geometry
+        Tonearm rotation geometry (stylus tip target)
         ==========================================
-        Goal: rotate until bottom-left corner of the arm tube reaches the inner recorded radius (debug green ring).
+        Goal: rotate until the stylus tip (effective length endpoint) reaches the inner recorded radius (debug green ring).
 
         Definitions:
             d        = pivot-to-spindle-mm
-            L        = eff-length-mm (stylus tip)
-            w        = arm-bar-width-mm
-            s        = stylus-length-mm (stylus protrusion beyond tube)
+            L        = eff-length-mm (pivot center to stylus tip)
             R_outer  = outer-record-mm (outer groove radius)
-            R_inner  = inner-record-mm (inner groove radius)
+            R_inner  = inner-record-mm (inner groove radius / start of clearance)
 
-        Target point: tube bottom-left corner (not stylus tip).
-            Corner effective length Lc = L - (s + w/2)
-
-        Law of cosines (corner geometry):
-            cos(θ) = (d^2 + Lc^2 - R^2) / (2 d Lc)
-            θ = acos( (d^2 + Lc^2 - R^2) / (2 d Lc) ) 
+        Law of cosines (tip geometry):
+            cos(θ) = (d^2 + L^2 - R^2) / (2 d L)
+            θ = acos( (d^2 + L^2 - R^2) / (2 d L) )
 
         Rotation convention (0deg points downward):
             rotate = 90deg - (mount-angle + θ)
 
         Implementation approach (modern CSS):
-            - Expose intermediate cos ratios for clarity (auditable values).
-            - Use acos() directly to obtain θ.
+            - Expose intermediate cos ratios for clarity.
+            - Use acos() directly to obtain θ (requires CSS trig support).
         */
-        /* Corner geometry offsets */
-        --corner-offset-mm: calc(var(--stylus-length-mm) + (var(--arm-bar-width-mm) / 2));
-        --corner-effective-length-mm: calc(var(--eff-length-mm) - var(--corner-offset-mm));
         /* Law-of-cosines ratios (cos θ) for outer & inner radii (unitless). */
-        --lawcos-outer: calc(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--corner-effective-length-mm) * var(--corner-effective-length-mm)) - (var(--outer-record-mm) * var(--outer-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--corner-effective-length-mm)));
-        --lawcos-inner: calc(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--corner-effective-length-mm) * var(--corner-effective-length-mm)) - (var(--inner-record-mm) * var(--inner-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--corner-effective-length-mm)));
-        /* Dynamic arc-cosine angles (requires modern CSS trig). */
+        --lawcos-outer: calc(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--eff-length-mm) * var(--eff-length-mm)) - (var(--outer-record-mm) * var(--outer-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--eff-length-mm)));
+        --lawcos-inner: calc(((var(--pivot-to-spindle-mm) * var(--pivot-to-spindle-mm)) + (var(--eff-length-mm) * var(--eff-length-mm)) - (var(--inner-record-mm) * var(--inner-record-mm))) / (2 * var(--pivot-to-spindle-mm) * var(--eff-length-mm)));
         --arm-theta-outer: acos(var(--lawcos-outer));
         --arm-theta-inner: acos(var(--lawcos-inner));
-        /* Final rotation angles expressed via formula components (no magic numbers). */
         --arm-rotate-start: calc(90deg - (var(--mount-angle) + var(--arm-theta-outer)));
         --arm-rotate-end: calc(90deg - (var(--mount-angle) + var(--arm-theta-inner)));
     }
@@ -245,12 +235,9 @@
         box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
     }
 
-    /* --- DEBUG RINGS (temporary): visualize key radii ---
-       - Outer recorded radius (2 * --outer-record-mm)
-       - Inner recorded radius (2 * --inner-record-mm)
-       These are drawn relative to the platter center. */
-    .record-player__platter::before,
-    .record-player__platter::after {
+    /* Debug visuals are only shown when parent has .debug class */
+    .record-player.debug .record-player__platter::before,
+    .record-player.debug .record-player__platter::after {
         content: "";
         position: absolute;
         top: 50%;
@@ -259,23 +246,18 @@
         border-radius: 50%;
         pointer-events: none;
         z-index: 6;
-        /* above record */
     }
 
-    /* Outer recorded radius ring */
-    .record-player__platter::before {
+    .record-player.debug .record-player__platter::before {
         width: calc(2 * var(--outer-record-mm) * var(--mm));
         height: calc(2 * var(--outer-record-mm) * var(--mm));
         border: 2px dashed rgba(0, 188, 212, 0.8);
-        /* cyan */
     }
 
-    /* Inner recorded radius ring */
-    .record-player__platter::after {
+    .record-player.debug .record-player__platter::after {
         width: calc(2 * var(--inner-record-mm) * var(--mm));
         height: calc(2 * var(--inner-record-mm) * var(--mm));
         border: 2px dashed rgba(139, 195, 74, 0.9);
-        /* green */
     }
 
     .record-player__record {
@@ -327,8 +309,8 @@
         z-index: 1;
     }
 
-    /* Label radius debug ring (derived): diameter = 2 * --label-radius-mm */
-    .record-player__record::after {
+    /* Label radius debug ring only when .debug */
+    .record-player.debug .record-player__record::after {
         content: "";
         position: absolute;
         top: 50%;
@@ -337,11 +319,9 @@
         width: calc(2 * var(--label-radius-mm) * var(--mm));
         height: calc(2 * var(--label-radius-mm) * var(--mm));
         border: 1px dashed rgba(255, 152, 0, 0.9);
-        /* amber */
         border-radius: 50%;
         pointer-events: none;
         z-index: 7;
-        /* above platter rings */
     }
 
     .record-player__label {
@@ -471,7 +451,11 @@
         transform: translateX(-50%);
         transform-origin: top center;
         filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-        /* DEBUG: visual outline of arm tube */
+        /* Arm outline only in debug mode */
+        outline: none;
+    }
+
+    .record-player.debug .record-player__arm {
         outline: 1px dashed rgba(255, 0, 0, 0.6);
         outline-offset: -1px;
     }
@@ -489,8 +473,8 @@
         background-image: linear-gradient(to bottom, transparent 45%, rgba(255, 255, 255, 0.025) 55%), linear-gradient(to right, #222, #111);
     }
 
-    /* DEBUG: mark the transform-origin (top center of arm) */
-    .record-player__arm::after {
+    /* Transform-origin marker only in debug */
+    .record-player.debug .record-player__arm::after {
         content: "";
         position: absolute;
         top: 0;
@@ -507,8 +491,8 @@
 
     .record-player__cartridge {
         content: "";
-        /* display: block; */
-        display: none;
+        display: block;
+        /* display: none; */
         position: absolute;
         /* center the cartridge horizontally at arm tip */
         left: 50%;
@@ -526,7 +510,10 @@
             linear-gradient(to right, var(--cart-color-1), var(--cart-color-2));
         box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
         pointer-events: none;
-        /* DEBUG: outline cartridge to inspect its corners */
+        outline: none;
+    }
+
+    .record-player.debug .record-player__cartridge {
         outline: 1px dashed rgba(0, 0, 255, 0.7);
         outline-offset: -1px;
     }
