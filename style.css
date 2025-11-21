@@ -22,7 +22,6 @@
 @layer base {
     :root {
         /* Colors */
-        --color-bg: #bbb;
         --color-white: whitesmoke;
         --color-black: #000;
         --border-dark: #333;
@@ -173,11 +172,47 @@
         --arm-theta-inner: acos(var(--lawcos-inner));
         --arm-rotate-start: calc(90deg - (var(--mount-angle) + var(--arm-theta-outer)));
         --arm-rotate-end: calc(90deg - (var(--mount-angle) + var(--arm-theta-inner)));
+
+        /* Chassis (wooden base) sizing: add a margin around platter */
+        --chassis-margin-mm: 40;
+        /* extra mm around platter edge */
+        --chassis-diameter-mm: calc(var(--platter-diameter-mm) + 2 * var(--chassis-margin-mm));
+        --chassis-size: calc(var(--chassis-diameter-mm) * var(--mm));
+
+        /* Rectangular chassis sizing (wooden plinth) */
+        --chassis-margin-x-mm: 70;
+        /* widened for pivot space */
+        --chassis-margin-y-mm: 50;
+        /* vertical extra space */
+        --chassis-width-mm: calc(var(--platter-diameter-mm) + 2 * var(--chassis-margin-x-mm));
+        --chassis-height-mm: calc(var(--platter-diameter-mm) + 2 * var(--chassis-margin-y-mm));
+        --chassis-width: calc(var(--chassis-width-mm) * var(--mm));
+        --chassis-height: calc(var(--chassis-height-mm) * var(--mm));
+        --chassis-radius: 14px;
+        /* corner radius */
+
+        /* Off-center platter offsets (positive moves platter right/down) */
+        --platter-offset-x-mm: -25;
+        /* shift platter left (negative) */
+        --platter-offset-y-mm: 0;
+        /* keep vertical centered for now */
+        --platter-offset-x: calc(var(--platter-offset-x-mm) * var(--mm));
+        --platter-offset-y: calc(var(--platter-offset-y-mm) * var(--mm));
+
+        /* Refined wood palette & grain control */
+        --wood-base-deep: #3f2714;
+        --wood-base-mid: #59351b;
+        --wood-base-warm: #674221;
+        --wood-base-light: #7b5230;
+        --wood-grain-light-alpha: 0.08;
+        --wood-grain-dark-alpha: 0.12;
+        --wood-noise-alpha: 0.04;
+        --wood-knot-alpha: 0.22;
     }
 
     body {
         height: 100svh;
-        background: var(--color-bg);
+        background: var(--color-white);
         overflow: clip;
     }
 
@@ -237,9 +272,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        /* Give the container a size so percentage positioning is reliable */
-        width: var(--platter-size);
-        height: var(--platter-size);
+        width: var(--chassis-width);
+        height: var(--chassis-height);
     }
 
     .record-player__platter {
@@ -251,7 +285,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(calc(-50% + var(--platter-offset-x))) translateY(calc(-50% + var(--platter-offset-y)));
         display: grid;
         justify-items: center;
         align-items: center;
@@ -458,7 +492,7 @@
         top: 50%;
         left: 50%;
         /* center the pivot circle on its origin, then offset by mount distance at 45° to top-right */
-        translate: calc(var(--mount-distance) * var(--mount-cos) - 50%) calc(var(--mount-distance) * var(--mount-sin) - 50%);
+        translate: calc(var(--platter-offset-x) + var(--mount-distance) * var(--mount-cos) - 50%) calc(var(--platter-offset-y) + var(--mount-distance) * var(--mount-sin) - 50%);
         /* uses independent transform longhand to compose with transform animations */
         display: grid;
         justify-content: center;
@@ -570,6 +604,8 @@
         transform: rotate(calc(-1 * var(--mount-angle)));
         transform-origin: left center;
         z-index: 15;
+        left: calc(50% + var(--platter-offset-x));
+        top: calc(50% + var(--platter-offset-y));
     }
 
     .record-player.debug::after {
@@ -586,6 +622,8 @@
         padding: 0 2px;
         border-radius: 2px;
         z-index: 16;
+        left: calc(50% + var(--platter-offset-x));
+        top: calc(50% + var(--platter-offset-y));
     }
 
     /* CSS-only control: animations are present but paused by default so the
@@ -765,5 +803,37 @@
     97%,
     100% {
         rotate: var(--arm-rotate-end);
+    }
+}
+
+@layer components {
+    .record-player__chassis {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: var(--chassis-width);
+        height: var(--chassis-height);
+        transform: translate(-50%, -50%);
+        border-radius: var(--chassis-radius);
+        background: var(--wood-base-mid);
+        /* solid color only */
+        box-shadow:
+            0 0 0 3px rgba(0, 0, 0, 0.35),
+            0 6px 18px -4px rgba(0, 0, 0, 0.55),
+            0 20px 42px -12px rgba(0, 0, 0, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.08),
+            /* subtle top highlight */
+            inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+            /* bottom dark edge */
+            inset 0 0 10px rgba(0, 0, 0, 0.5),
+            inset 0 0 3px rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+    }
+
+    .record-player__chassis::before,
+    .record-player__chassis::after {
+        content: none;
+        /* remove pattern layers */
+        background: none;
     }
 }

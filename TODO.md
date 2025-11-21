@@ -29,6 +29,7 @@
 - [x] refactor(label): replace hardcoded label text in CSS with content from HTML data attributes
 - [x] feat(label): update the center-label artwork to a new design
 - [x] refactor(responsive): structure media queries for better mobile layout and breakpoints
+- [x] feat(chassis): add wooden base for the player
 - [ ] refactor(css): add will-change sparingly where animations run continuously
 - [ ] feat(animation): add needle drop effect on play start
 - [ ] feat(ui): make tonearm, record, spindle, and stylus more realistic
@@ -38,7 +39,6 @@
   - [ ] feat(spindle): add metallic texture
   - [ ] feat(stylus): add stylus tip detail
 - [ ] chore(css): clean up unused styles after feature additions
-- [ ] feat(chassis): add wooden base for the player
 - [ ] feat(shadow): add shadow under the record player
 - [ ] feat(controls): add volume control knob
 - [ ] feat(cover): add dust cover with load animation
